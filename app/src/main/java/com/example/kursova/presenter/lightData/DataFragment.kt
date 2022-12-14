@@ -1,4 +1,4 @@
-package com.example.kursova.presenter.accelerometer
+package com.example.kursova.presenter.lightData
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,46 +7,49 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.example.kursova.data.*
-import com.example.kursova.databinding.FragmentAccelerometerDataBinding
+import com.example.kursova.data.LightDao
+import com.example.kursova.data.LightEntity
+import com.example.kursova.data.SensorDatabase
+import com.example.kursova.databinding.FragmentDataBinding
 import kotlinx.coroutines.launch
 
-class AccelerometerDataFragment : Fragment(), AxisViewItemAdapter.OnItemSelectListener {
 
-    private val adapter = AxisViewItemAdapter(this)
-    private lateinit var binding: FragmentAccelerometerDataBinding
-    private lateinit var axisDao: AxisDao
+class DataFragment : Fragment(), ViewItemAdapter.OnItemSelectListener {
+
+    private val adapter = ViewItemAdapter(this)
+    private lateinit var binding: FragmentDataBinding
+    private lateinit var lightDao: LightDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAccelerometerDataBinding.inflate(inflater, container, false)
+        binding = FragmentDataBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
-            axisRecyclerView.adapter = adapter
+            groupRecyclerView.adapter = adapter
         }
 
         val db = Room.databaseBuilder(
             requireActivity().application,
             SensorDatabase::class.java, "database"
         ).build()
-        axisDao = db.provideAxisDao()
+        lightDao = db.provideLightDao()
 
         viewLifecycleOwner.lifecycleScope.launch{
-            val axis: List<AxisEntity> = axisDao.getAll()
-            adapter.updateItemsView(axis)
+            val light: List<LightEntity> = lightDao.getAll()
+            adapter.updateItemsView(light)
         }
     }
 
-    override fun onClick(axis: AxisEntity) {
+    override fun onClick(light: LightEntity) {
         viewLifecycleOwner.lifecycleScope.launch {
-            axisDao.delete(axis.id)
+            lightDao.delete(light.id)
+            adapter.updateItemsView(lightDao.getAll())
         }
     }
-
 }

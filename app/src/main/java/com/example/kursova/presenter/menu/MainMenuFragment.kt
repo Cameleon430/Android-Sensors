@@ -8,9 +8,9 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.kursova.R
-import com.example.kursova.presenter.accelerometer.AccelerometerDataFragment
+import com.example.kursova.presenter.accelerometerData.AccelerometerDataFragment
 import com.example.kursova.presenter.accelerometer.AccelerometerFragment
-import com.example.kursova.presenter.light.DataFragment
+import com.example.kursova.presenter.lightData.DataFragment
 import com.example.kursova.presenter.light.LightSensorFragment
 
 class MainMenuFragment : Fragment() {

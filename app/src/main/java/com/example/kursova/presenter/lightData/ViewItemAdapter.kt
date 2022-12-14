@@ -1,4 +1,4 @@
-package com.example.kursova.presenter.light
+package com.example.kursova.presenter.lightData
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

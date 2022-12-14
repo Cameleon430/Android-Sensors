@@ -1,4 +1,4 @@
-package com.example.kursova.presenter.accelerometer
+package com.example.kursova.presenter.accelerometerData
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
